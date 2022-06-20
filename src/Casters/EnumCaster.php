@@ -19,7 +19,12 @@ class EnumCaster implements Caster
             throw new LogicException("Caster [EnumCaster] may only be used to cast backed enums. Received [$this->enumType].");
         }
 
-        $castedValue = $this->enumType::tryFrom($value);
+        // check if value is already of the enum type
+        if (is_object($value) && enum_exists($value::class)) {
+            $castedValue = $value;
+        } else {
+            $castedValue = $this->enumType::tryFrom($value);
+        }
 
         if ($castedValue === null) {
             throw new LogicException("Couldn't cast enum [$this->enumType] with value [$value]");
