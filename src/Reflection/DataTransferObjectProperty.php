@@ -74,6 +74,11 @@ class DataTransferObjectProperty
         return $this->reflectionProperty->getDefaultValue();
     }
 
+    public function getReflectionPropName() : string
+    {
+        return $this->reflectionProperty->getName();
+    }
+
     private function resolveCaster(): ?Caster
     {
         $attributes = $this->reflectionProperty->getAttributes(CastWith::class);
